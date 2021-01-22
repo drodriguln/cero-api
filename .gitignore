@@ -1,3 +1,12 @@
+# Mac system files
+*.DS_STORE
+
+# Build directory
+target
+
+# IntelliJ files
+*.iml
+
 # Compiled class file
 *.class
 
