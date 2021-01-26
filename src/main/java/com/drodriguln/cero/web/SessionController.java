@@ -11,11 +11,12 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/session")
 public class SessionController {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @GetMapping("/session/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Session> getSession(@PathVariable String id) {
         Optional<Session> session = sessionRepository.findById(id);
         if (session.isEmpty()) {
@@ -24,7 +25,7 @@ public class SessionController {
         return ResponseEntity.status(HttpStatus.OK).body(session.get());
     }
 
-    @PostMapping("/session")
+    @PostMapping
     public ResponseEntity<Session> postSession() {
         Session session = new Session();
         session.initialize();
@@ -32,14 +33,14 @@ public class SessionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(session);
     }
 
-    @PutMapping("/session/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Session> putSession(@PathVariable String id, @RequestBody Session session) {
         //sessionRepository.save(session);
         System.out.println("Mock PUT: " + session.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(session);
     }
 
-    @DeleteMapping("/session/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSession(@PathVariable String id) {
         sessionRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

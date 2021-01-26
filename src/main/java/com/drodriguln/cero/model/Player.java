@@ -22,7 +22,7 @@ public class Player {
     }
 
     public void firstDraw(Deck deck) {
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= 7; i++) {
             this.draw(deck);
         }
     }
