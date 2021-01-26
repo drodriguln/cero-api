@@ -5,12 +5,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card {
-    @Id
-    private int id;
-    private String value;
+    public enum Color {
+        BLUE,
+        GREEN,
+        RED,
+        YELLOW,
+    }
+
+    private String id;
     private String color;
+    private String value;
+
+    public Card(Color color, String value) {
+        this.id = UUID.randomUUID().toString();
+        this.color = color.toString().toLowerCase();
+        this.value = value;
+    }
 }

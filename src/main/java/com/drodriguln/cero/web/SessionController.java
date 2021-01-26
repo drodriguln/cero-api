@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -26,15 +25,17 @@ public class SessionController {
     }
 
     @PostMapping("/session")
-    public ResponseEntity<Session> postSession(@RequestBody Session session) {
-        session.setId(UUID.randomUUID().toString());
+    public ResponseEntity<Session> postSession() {
+        Session session = new Session();
+        session.initialize();
         sessionRepository.save(session);
         return ResponseEntity.status(HttpStatus.CREATED).body(session);
     }
 
     @PutMapping("/session/{id}")
     public ResponseEntity<Session> putSession(@PathVariable String id, @RequestBody Session session) {
-        sessionRepository.save(session);
+        //sessionRepository.save(session);
+        System.out.println("Mock PUT: " + session.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(session);
     }
 
