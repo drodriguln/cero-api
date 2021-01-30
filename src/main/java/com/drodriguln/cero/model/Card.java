@@ -1,6 +1,5 @@
 package com.drodriguln.cero.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +28,6 @@ public class Card {
         SEVEN,
         EIGHT,
         NINE,
-        REVERSE,
         SKIP,
     }
 
@@ -41,11 +39,6 @@ public class Card {
         this.id = UUID.randomUUID().toString();
         this.color = color;
         this.value = value;
-    }
-
-    @JsonIgnore
-    public boolean isSkipValue() {
-        return Value.SKIP.equals(this.value) || Value.REVERSE.equals(this.value);
     }
 
     public boolean matches(Card card) {

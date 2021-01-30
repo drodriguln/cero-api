@@ -38,7 +38,7 @@ public class DiscardController {
 
         player.discard(session.getDiscard(), card);
 
-        if (!card.isSkipValue()) {
+        if (!Card.Value.SKIP.equals(card.getValue())) {
             player.endTurn();
             otherPlayer.startTurn();
 
@@ -73,7 +73,7 @@ public class DiscardController {
 
             if (opponent.hasWon()) {
                 opponent.winGame();
-            } else if (matchedCard.isSkipValue()) {
+            } else if (Card.Value.SKIP.equals(matchedCard.getValue())) {
                 continue;
             } else {
                 player.startTurn();

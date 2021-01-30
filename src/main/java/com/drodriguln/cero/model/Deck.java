@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -38,14 +37,17 @@ public class Deck {
 
         for (int i = 0; i <= 3; i++) {
             Card.Color color = Card.Color.values()[i];
+
             this.cards.add(new Card(color, Card.Value.ZERO));
             for (int j = 1; j <= 9; j++) {
                 for (int k = 1; k <= 2; k++) {
                     this.cards.add(new Card(color, Card.Value.values()[j]));
                 }
             }
-            this.cards.add(new Card(color, Card.Value.REVERSE));
-            this.cards.add(new Card(color, Card.Value.SKIP));
+
+            for (int j = 1; j <= 2; j++) {
+                this.cards.add(new Card(color, Card.Value.SKIP));
+            }
         }
     }
 }
