@@ -39,8 +39,8 @@ public class DiscardController {
         player.discard(session.getDiscard(), card);
 
         if (!card.isSkipValue()) {
-            player.setActivity("end");
-            otherPlayer.setActivity("start");
+            player.endTurn();
+            otherPlayer.startTurn();
 
             executeAI(session);
         }
@@ -72,12 +72,12 @@ public class DiscardController {
             discard.place(matchedCard);
 
             if (opponent.hasWon()) {
-                opponent.setActivity("won");
+                opponent.winGame();
             } else if (matchedCard.isSkipValue()) {
                 continue;
             } else {
-                player.setActivity("start");
-                opponent.setActivity("end");
+                player.startTurn();
+                opponent.endTurn();
             }
 
             isFinishedTurn = true;

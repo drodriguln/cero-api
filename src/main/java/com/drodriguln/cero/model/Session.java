@@ -25,10 +25,10 @@ public class Session {
 
     public void initialize() {
         this.player.firstDraw(this.deck);
-        this.player.setActivity("start");
-
         this.opponent.firstDraw(this.deck);
-        this.opponent.setActivity("end");
+
+        this.opponent.endTurn();
+        this.player.startTurn();
 
         this.discard.place(deck.draw());
     }

@@ -10,11 +10,18 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 public class Player {
-    private String activity;
+    public enum Status {
+        INITIALIZE,
+        START,
+        END,
+        WON,
+    }
+
+    private Status status;
     private List<Card> cards;
 
     public Player() {
-        this.activity = "initialize";
+        this.status = Status.INITIALIZE;
         this.cards = new ArrayList<>();
     }
 
@@ -41,6 +48,18 @@ public class Player {
         return cards.stream()
             .filter((c) -> c.matches(card))
             .findAny();
+    }
+
+    public void startTurn() {
+        this.status = Status.START;
+    }
+
+    public void endTurn() {
+        this.status = Status.END;
+    }
+
+    public void winGame() {
+        this.status = Status.WON;
     }
 
     public boolean hasWon() {
