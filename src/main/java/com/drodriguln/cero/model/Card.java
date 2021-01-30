@@ -18,12 +18,12 @@ public class Card {
     }
 
     private String id;
-    private String color;
+    private Color color;
     private String value;
 
     public Card(Color color, String value) {
         this.id = UUID.randomUUID().toString();
-        this.color = color.toString().toLowerCase();
+        this.color = color;
         this.value = value;
     }
 
