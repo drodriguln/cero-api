@@ -38,14 +38,14 @@ public class Deck {
 
         for (int i = 0; i <= 3; i++) {
             Card.Color color = Card.Color.values()[i];
-            this.cards.add(new Card(color, "0"));
+            this.cards.add(new Card(color, Card.Value.ZERO));
             for (int j = 1; j <= 9; j++) {
                 for (int k = 1; k <= 2; k++) {
-                    this.cards.add(new Card(color, Integer.toString(j)));
+                    this.cards.add(new Card(color, Card.Value.values()[j]));
                 }
             }
-            this.cards.add(new Card(color, "reverse"));
-            this.cards.add(new Card(color, "skip"));
+            this.cards.add(new Card(color, Card.Value.REVERSE));
+            this.cards.add(new Card(color, Card.Value.SKIP));
         }
     }
 }
