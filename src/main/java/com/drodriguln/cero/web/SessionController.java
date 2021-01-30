@@ -2,6 +2,7 @@ package com.drodriguln.cero.web;
 
 import com.drodriguln.cero.model.Session;
 import com.drodriguln.cero.domain.SessionRepository;
+import com.drodriguln.cero.model.UISession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,18 +27,18 @@ public class SessionController {
     }
 
     @PostMapping
-    public ResponseEntity<Session> postSession() {
+    public ResponseEntity<UISession> postSession() {
         Session session = new Session();
         session.initialize();
         sessionRepository.save(session);
-        return ResponseEntity.status(HttpStatus.CREATED).body(session);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UISession(session));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Session> putSession(@PathVariable String id, @RequestBody Session session) {
+    public ResponseEntity<UISession> putSession(@PathVariable String id, @RequestBody UISession uiSession) {
         //sessionRepository.save(session);
-        System.out.println("Mock PUT: " + session.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(session);
+        System.out.println("Mock PUT: " + uiSession.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(uiSession);
     }
 
     @DeleteMapping("/{id}")

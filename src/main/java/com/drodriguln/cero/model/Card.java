@@ -27,4 +27,12 @@ public class Card {
         this.color = color.toString().toLowerCase();
         this.value = value;
     }
+
+    public boolean isSkipValue() {
+        return "skip".equals(this.value) || "reverse".equals(this.value);
+    }
+
+    public boolean matches(Card card) {
+        return this.value.equals(card.getValue()) || this.color.equals(card.getColor());
+    }
 }

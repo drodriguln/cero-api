@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +26,24 @@ public class Player {
         for (int i = 1; i <= 7; i++) {
             this.draw(deck);
         }
+    }
+
+    public void remove(Card card) {
+        this.cards.remove(card);
+    }
+
+    public void discard(Discard discard, Card card) {
+        discard.place(card);
+        this.remove(card);
+    }
+
+    public Optional<Card> findMatch(Card card) {
+        return cards.stream()
+            .filter((c) -> c.matches(card))
+            .findAny();
+    }
+
+    public boolean hasWon() {
+        return this.cards.size() == 0;
     }
 }
