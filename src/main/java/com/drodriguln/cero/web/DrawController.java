@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static com.drodriguln.cero.web.SessionController.COOKIE_NAME;
+import static com.drodriguln.cero.service.CookieService.COOKIE_NAME;
 
 @CrossOrigin
 @RestController

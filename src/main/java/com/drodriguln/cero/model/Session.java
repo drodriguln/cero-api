@@ -1,11 +1,12 @@
 package com.drodriguln.cero.model;
 
+import com.drodriguln.cero.service.CookieService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("Session")
+@RedisHash(value = "Session", timeToLive = CookieService.TTL)
 @Data
 @AllArgsConstructor
 public class Session {

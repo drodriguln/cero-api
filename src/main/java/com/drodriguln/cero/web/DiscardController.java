@@ -3,14 +3,17 @@ package com.drodriguln.cero.web;
 import com.drodriguln.cero.domain.SessionRepository;
 import com.drodriguln.cero.error.OutOfCardsException;
 import com.drodriguln.cero.model.*;
+import com.drodriguln.cero.service.CookieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.drodriguln.cero.web.SessionController.COOKIE_NAME;
+import static com.drodriguln.cero.service.CookieService.COOKIE_NAME;
 
 @CrossOrigin
 @RestController
@@ -18,9 +21,11 @@ import static com.drodriguln.cero.web.SessionController.COOKIE_NAME;
 public class DiscardController {
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired
+    private CookieService cookieService;
 
     @PostMapping
-    public ResponseEntity<UISession> postDiscard(@CookieValue(COOKIE_NAME) String sessionId, @PathVariable String playerId, @RequestBody Card card) {
+    public ResponseEntity<UISession> postDiscard(@CookieValue(COOKIE_NAME) String sessionId, @PathVariable String playerId, @RequestBody Card card, HttpServletResponse response) {
         Optional<Session> sessionOpt = sessionRepository.findById(sessionId);
         if (sessionOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -47,7 +52,14 @@ public class DiscardController {
             executeAI(session);
         }
 
-        sessionRepository.save(session);
+        if (player.hasWon() || otherPlayer.hasWon()) {
+            sessionRepository.deleteById(sessionId);
+            Cookie expiredCookie = cookieService.createExpired();
+            response.addCookie(expiredCookie);
+        } else {
+            sessionRepository.save(session);
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(new UISession(session));
     }
 
