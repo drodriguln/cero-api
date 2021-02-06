@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static com.drodriguln.cero.web.SessionController.COOKIE_NAME;
+
 @CrossOrigin
 @RestController
-@RequestMapping("/session/{sessionId}/player/{playerId}/discard")
+@RequestMapping("/players/{playerId}/discard")
 public class DiscardController {
     @Autowired
     private SessionRepository sessionRepository;
 
     @PostMapping
-    public ResponseEntity<UISession> postDiscard(@PathVariable String sessionId, @PathVariable String playerId, @RequestBody Card card) {
+    public ResponseEntity<UISession> postDiscard(@CookieValue(COOKIE_NAME) String sessionId, @PathVariable String playerId, @RequestBody Card card) {
         Optional<Session> sessionOpt = sessionRepository.findById(sessionId);
         if (sessionOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

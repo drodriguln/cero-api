@@ -8,42 +8,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/sessions")
 public class SessionController {
+    public static final String COOKIE_NAME = "CERO_SESSION";
+
     @Autowired
     private SessionRepository sessionRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Session> getSession(@PathVariable String id) {
-        Optional<Session> session = sessionRepository.findById(id);
-        if (session.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(session.get());
-    }
-
     @PostMapping
-    public ResponseEntity<UISession> postSession() {
+    public ResponseEntity<UISession> postSession(HttpServletResponse response) {
         Session session = new Session();
         session.initialize();
         sessionRepository.save(session);
+
+        Cookie cookie = new Cookie(COOKIE_NAME, session.getId());
+        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
         return ResponseEntity.status(HttpStatus.CREATED).body(new UISession(session));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UISession> putSession(@PathVariable String id, @RequestBody UISession uiSession) {
-        //sessionRepository.save(session);
-        System.out.println("Mock PUT: " + uiSession.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(uiSession);
-    }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteSession(@CookieValue(COOKIE_NAME) String sessionId, HttpServletResponse response) {
+        sessionRepository.deleteById(sessionId);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSession(@PathVariable String id) {
-        sessionRepository.deleteById(id);
+        Cookie cookie = new Cookie(COOKIE_NAME, null);
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
