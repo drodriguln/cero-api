@@ -11,22 +11,20 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/session/{sessionId}/player/{playerId}/draw")
+@RequestMapping("/sessions/{sessionId}/draw")
 public class DrawController {
     @Autowired
     private SessionRepository sessionRepository;
 
     @PostMapping
-    public ResponseEntity<Player> postDiscard(@PathVariable String sessionId, @PathVariable String playerId) {
+    public ResponseEntity<Player> postDiscard(@PathVariable String sessionId) {
         Optional<Session> sessionOpt = sessionRepository.findById(sessionId);
         if (sessionOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         Session session = sessionOpt.get();
-        Player player = "player".equals(playerId)
-            ? session.getPlayer()
-            : session.getOpponent();
+        Player player = session.getPlayer();
 
         player.draw(session.getDeck());
 

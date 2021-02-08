@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("Session")
+@RedisHash(value = "Session", timeToLive = 86400) // ttl = 1 day
 @Data
 @AllArgsConstructor
 public class Session {

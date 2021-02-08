@@ -12,35 +12,27 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/session/{sessionId}/player/{playerId}/discard")
+@RequestMapping("/sessions/{sessionId}/discard")
 public class DiscardController {
     @Autowired
     private SessionRepository sessionRepository;
 
     @PostMapping
-    public ResponseEntity<UISession> postDiscard(@PathVariable String sessionId, @PathVariable String playerId, @RequestBody Card card) {
+    public ResponseEntity<UISession> postDiscard(@PathVariable String sessionId, @RequestBody Card card) {
         Optional<Session> sessionOpt = sessionRepository.findById(sessionId);
         if (sessionOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         Session session = sessionOpt.get();
-
-        Player player;
-        Player otherPlayer;
-        if ("player".equals(playerId)) {
-            player = session.getPlayer();
-            otherPlayer = session.getOpponent();
-        } else {
-            player = session.getOpponent();
-            otherPlayer = session.getPlayer();
-        }
+        Player player = session.getPlayer();
+        Player opponent = session.getOpponent();
 
         player.discard(session.getDiscard(), card);
 
         if (!Card.Value.SKIP.equals(card.getValue())) {
             player.endTurn();
-            otherPlayer.startTurn();
+            opponent.startTurn();
 
             executeAI(session);
         }
