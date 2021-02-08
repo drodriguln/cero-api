@@ -25,6 +25,13 @@ public class Player {
         this.cards = new ArrayList<>();
     }
 
+    public Status getStatus() {
+        if (this.cards.size() == 0) {
+            this.setStatus(Status.WON);
+        }
+        return this.status;
+    }
+
     public void draw(Deck deck) {
         this.cards.add(deck.draw());
     }
@@ -56,13 +63,5 @@ public class Player {
 
     public void endTurn() {
         this.status = Status.END;
-    }
-
-    public void winGame() {
-        this.status = Status.WON;
-    }
-
-    public boolean hasWon() {
-        return this.cards.size() == 0;
     }
 }
