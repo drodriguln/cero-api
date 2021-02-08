@@ -8,11 +8,11 @@ import lombok.Data;
 public class UISession {
     private Card discard;
     private Player player;
-    private UIOpponent opponent;
+    private Player opponent;
 
     public UISession(Session session) {
         this.discard = session.getDiscard().getTopCard();
         this.player = session.getPlayer();
-        this.opponent = new UIOpponent(session.getOpponent());
+        this.opponent = session.getOpponent();
     }
 }
