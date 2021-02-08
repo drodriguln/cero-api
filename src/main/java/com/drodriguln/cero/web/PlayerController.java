@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static com.drodriguln.cero.web.SessionController.COOKIE_NAME;
-
 @CrossOrigin
 @RestController
-@RequestMapping("/players")
+@RequestMapping("/session/{sessionId}/player")
 public class PlayerController {
     @Autowired
     private SessionRepository sessionRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Player> getPlayer(@CookieValue(COOKIE_NAME) String sessionId, @PathVariable String id) {
+    public ResponseEntity<Player> getPlayer(@PathVariable String sessionId, @PathVariable String id) {
         Optional<Session> sessionOpt = sessionRepository.findById(sessionId);
         if (sessionOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
