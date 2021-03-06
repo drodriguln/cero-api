@@ -19,7 +19,7 @@ To run this app locally:
 
 ### Development Environment
 To set up an environment for development:
-1. To run the application: `./mvn spring-boot:run -Dspring.profiles.active="development"`
+1. To run the application: `./mvnw spring-boot:run -Dspring-boot.run.profiles=dev`
 2. Spin up a redis store. Either do this with a local redis install or use the redis docker image provided the dev docker-compose config by running `docker-compose -f docker-compose.dev.yaml up`
 
 ### Production Environment
