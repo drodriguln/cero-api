@@ -1,1 +1,2 @@
+spring.redis.host: localhost
 springdoc.api-docs.path: /api-docs

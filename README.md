@@ -1,5 +1,6 @@
 # Cero API
-Cero API, built on Spring Boot, is the interface between the session store and users' actions in the Cero project's UI. Redis is used for session storage.
+Cero is a card game web application based on Crazy Eights. The UI and API for Cero is split between two code bases: `cero-ui` and `cero-api`.
+This API, built on Spring Boot, is the interface between the Redis session store and the `cero-ui` frontend.
 
 ## Getting Started
 
