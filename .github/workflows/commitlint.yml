@@ -1,0 +1,12 @@
+name: Lint Commit
+on: push
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Commitlint
+        uses: wagoid/commitlint-github-action@v2
