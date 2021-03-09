@@ -2,6 +2,15 @@
 Cero is a card game web application based on Crazy Eights. The UI and API for Cero is split between two code bases: `cero-ui` and `cero-api`.
 This API, built on Spring Boot, is the interface between the Redis session store and the [cero-ui](https://github.com/drodriguln/cero-ui) frontend.
 
+## Path to v1.0
+This project is still a work in progress, and as such there are milestones yet to hit before hitting the first major release.
+
+ - [x] works with cero-ui
+ - [x] dockerize
+ - [ ] swagger ui
+ - [ ] validate card IDs
+ - [ ] unit tests
+
 ## Getting Started
 
 ### Prerequisites
